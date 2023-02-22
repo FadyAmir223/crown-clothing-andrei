@@ -13,6 +13,7 @@ npm i vite-plugin-svgr
 npm i react-router-dom@6
 npm i styled-components
 npm i redux react-redux redux-logger
+npm i reselect
 npm i @tanstack/react-query@4.10.1
 
 # extra
