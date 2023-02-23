@@ -29,7 +29,7 @@ const firebaseConfig = {
   appId: '1:331622511860:web:74836832763c1950a75aa1',
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+/*const firebaseApp = */ initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -63,13 +63,15 @@ export const getCategoriesAndDocuments = async () => {
   const q = query(collectionRef);
   const querySanpshot = await getDocs(q);
 
-  const categoryMap = querySanpshot.docs.reduce((acc, docSanpshot) => {
-    const { title, items } = docSanpshot.data();
-    acc[title.toLowerCase()] = items;
+  return querySanpshot.docs.map((docSanpshot) => docSanpshot.data());
 
-    return acc;
-  }, {});
-  return categoryMap;
+  // .reduce((acc, docSanpshot) => {
+  //   const { title, items } = docSanpshot.data();
+  //   acc[title.toLowerCase()] = items;
+
+  //   return acc;
+  // }, {});
+  // return categoryMap;
 };
 
 export const createUserDocumentFromAuth = async (userAuth, moreInfo = {}) => {
