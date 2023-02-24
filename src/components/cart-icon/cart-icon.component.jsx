@@ -1,5 +1,9 @@
-import { CartContext } from '../../contexts/cart.context';
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectCartStat,
+  selectTotalQuantity,
+} from '../../store/cart/cart.selector';
+import { setCartStat } from '../../store/cart/cart.action';
 import {
   CartIconContainer,
   ItemCount,
@@ -7,14 +11,15 @@ import {
 } from './cart-icon.style';
 
 const CartIcon = () => {
-  const { setCartStat, totalQuantity } = useContext(CartContext);
+  const dispatch = useDispatch();
+
+  const totalQuantity = useSelector(selectTotalQuantity);
+
+  const cartStat = useSelector(selectCartStat);
+  const setCartStat_ = () => dispatch(setCartStat(!cartStat));
 
   return (
-    <CartIconContainer
-      onClick={() => {
-        setCartStat((prevCartStat) => !prevCartStat);
-      }}
-    >
+    <CartIconContainer onClick={setCartStat_}>
       <ShoppingIconSvg />
       <ItemCount>{totalQuantity}</ItemCount>
     </CartIconContainer>

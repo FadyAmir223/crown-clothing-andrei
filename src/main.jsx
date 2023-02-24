@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import { CartProvider } from './contexts/cart.context';
 import { Container } from './main.style.js';
 import { Provider } from 'react-redux';
 
@@ -12,9 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <Container>
       <BrowserRouter>
-        <CartProvider>
-          <App />
-        </CartProvider>
+        <App />
       </BrowserRouter>
     </Container>
   </Provider>
