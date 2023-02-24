@@ -2,9 +2,11 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { createTransform } from 'redux-persist';
+import thunk from 'redux-thunk';
+
 import { rootReducer } from './root-reducer';
 // import { loggerCustom } from './logger/logger';
-import { createTransform } from 'redux-persist';
 
 // https://github.com/rt2zz/redux-persist/blob/master/docs/api.md
 
@@ -20,15 +22,17 @@ const cartFilter = createTransform(
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['user'],
+  // blacklist: ['user'],
+  whitelist: ['cart'],
   transforms: [cartFilter],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleWares = [process.env.NODE_ENV === 'development' && logger].filter(
-  Boolean
-); // process.env.NODE_ENV !== 'production'
+const middleWares = [
+  process.env.NODE_ENV === 'development' && logger,
+  thunk,
+].filter(Boolean); // process.env.NODE_ENV !== 'production'
 
 // use Redux DevTools
 const composeEnhancer =
