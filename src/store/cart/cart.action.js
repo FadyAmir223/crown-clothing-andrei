@@ -22,19 +22,21 @@ export const decrementSelectedItem = (cartItems, id) => {
   let newCartItems;
   cartItems.forEach((cartItem) => {
     if (cartItem.id === id)
-      if (cartItem.quantity === 1) deleteSelectedItem(id);
+      if (cartItem.quantity === 1)
+        newCartItems = deleteSelectedItem(cartItems, id);
       else {
         newCartItems = cartItems.map((_cartItem) =>
           _cartItem.id === id
             ? { ..._cartItem, quantity: _cartItem.quantity - 1 }
             : _cartItem
         );
-        return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
       }
   });
+  return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
 };
 
 export const deleteSelectedItem = (cartItems, id) => {
   const newCartItems = cartItems.filter((cartItem) => cartItem.id !== id);
+  console.log(newCartItems);
   return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
 };

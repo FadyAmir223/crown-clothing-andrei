@@ -2,15 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addCartItem,
   decrementSelectedItem,
+  deleteSelectedItem,
 } from '../../store/cart/cart.action';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import './checkout-item.style.scss';
 
 const CheckoutItem = ({ cartItem }) => {
   const { id, name, imageUrl, price, quantity } = cartItem;
-
-  // const { addCartItem, decrementSelectedItem, deleteSelectedItem } =
-  //   useContext(CartContext);
 
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);

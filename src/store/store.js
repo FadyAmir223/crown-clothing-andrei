@@ -1,21 +1,44 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { rootReducer } from './root-reducer';
+// import { loggerCustom } from './logger/logger';
+import { createTransform } from 'redux-persist';
 
-const loggerCustom = (store) => (next) => (action) => {
-  if (!action.type) return next(action);
+// https://github.com/rt2zz/redux-persist/blob/master/docs/api.md
 
-  console.log('type: ', action.type);
-  console.log('payload: ', action.payload);
-  console.log('currState: ', store.getState());
+const cartFilter = createTransform(
+  (inboundState) => {
+    const { cartStat, ...cartWithoutOpen } = inboundState;
+    return cartWithoutOpen;
+  },
+  (outboundState) => outboundState,
+  { whitelist: ['cart'] }
+);
 
-  next(action);
-
-  console.log('nextState: ', store.getState());
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['user'],
+  transforms: [cartFilter],
 };
 
-const middleWares = [logger];
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const composedEnhancer = compose(applyMiddleware(...middleWares));
+const middleWares = [process.env.NODE_ENV === 'development' && logger].filter(
+  Boolean
+); // process.env.NODE_ENV !== 'production'
 
-export const store = createStore(rootReducer, composedEnhancer);
+// use Redux DevTools
+const composeEnhancer =
+  (process.env.NODE_ENV !== 'production' &&
+    window &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+
+const composedEnhancer = composeEnhancer(applyMiddleware(...middleWares));
+
+export const store = createStore(persistedReducer, composedEnhancer);
+
+export const persistor = persistStore(store);
