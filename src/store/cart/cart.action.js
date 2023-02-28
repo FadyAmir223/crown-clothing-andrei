@@ -23,7 +23,7 @@ export const decrementSelectedItem = (cartItems, id) => {
   cartItems.forEach((cartItem) => {
     if (cartItem.id === id)
       if (cartItem.quantity === 1)
-        newCartItems = deleteSelectedItem(cartItems, id);
+        newCartItems = cartItems.filter((cartItem) => cartItem.id !== id);
       else {
         newCartItems = cartItems.map((_cartItem) =>
           _cartItem.id === id
@@ -31,12 +31,12 @@ export const decrementSelectedItem = (cartItems, id) => {
             : _cartItem
         );
       }
+    return newCartItems;
   });
   return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
 };
 
 export const deleteSelectedItem = (cartItems, id) => {
   const newCartItems = cartItems.filter((cartItem) => cartItem.id !== id);
-  console.log(newCartItems);
   return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
 };
