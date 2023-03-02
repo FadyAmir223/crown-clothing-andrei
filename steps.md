@@ -1,3 +1,7 @@
+# update npm & packages
+npm i -g npm
+npm update
+
 # Project
 npm create vite@latest
 cd vite-project
@@ -23,7 +27,9 @@ npm i sass
 npm i styled-components
 npm i firebase
 npm i vite-plugin-svgr
-
+npm i @stripe/stripe-js @stripe/react-stripe-js
+npm i stripe dotenv
+npm i -g netlify-cli
 
 # Github
 ## per-device
@@ -45,16 +51,18 @@ new SSH key => title & key => add SSH key
 git init
 git remote add origin <repo_url>
 touch .gitignore
-git pull origin master --rebase
+git pull <remote> <branch> --rebase
 
 git add .
 git commit -m "msg"
 
-git branch -M main
-git checkout main
-|| git checkout -b main
+git branch -M <branch>
+git checkout <branch>
+|| git checkout -b <branch>
 
-git push origin main
+git merge <branch>
+
+git push origin <branch>
 || git push
 
 
@@ -62,5 +70,5 @@ git push origin main
 git clone <repo-ssh-url>
 
 [clone-branch]
-git clone -b <branch-name> <repo-ssh-url>
+git clone -b <branch> <repo-ssh-url>
 
