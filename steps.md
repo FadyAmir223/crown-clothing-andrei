@@ -30,6 +30,8 @@ npm i vite-plugin-svgr
 npm i @stripe/stripe-js @stripe/react-stripe-js
 npm i stripe dotenv
 npm i -g netlify-cli
+npm i -D typescript @types/react @types/react-dom @types/node @types/node
+
 
 # Github
 ## per-device
