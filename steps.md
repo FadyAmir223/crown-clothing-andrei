@@ -15,7 +15,6 @@ npm i vite-plugin-svgr
 # React
 npm i react-router-dom@6
 npm i @tanstack/react-query
-
 npm i redux react-redux redux-logger
 npm i reselect
 npm i redux-persist
@@ -29,6 +28,7 @@ npm i firebase
 npm i vite-plugin-svgr
 npm i @stripe/stripe-js @stripe/react-stripe-js
 npm i stripe dotenv
+
 npm i -g netlify-cli
 npm i -D typescript @types/react @types/react-dom @types/node @types/node
 
