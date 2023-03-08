@@ -1,4 +1,0 @@
-export const CART_ACTIONS = {
-  SET_CART_ITEMS: 'cart/SET_CART_ITEMS',
-  SET_CART_STAT: 'cart/SET_CART_STAT',
-};
