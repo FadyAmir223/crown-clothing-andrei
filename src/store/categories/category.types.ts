@@ -5,9 +5,9 @@ export enum CATEGORY_ACTIONS {
 }
 
 export type Category = {
-  title: string;
-  imageUrl: string;
-  items: CategoryItem[];
+  readonly title: string;
+  readonly imageUrl: string;
+  readonly items: CategoryItem[];
 };
 
 export type CategoryItem = {
