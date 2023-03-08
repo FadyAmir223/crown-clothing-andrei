@@ -1,13 +1,19 @@
 import { CartItem, CART_ACTIONS } from './cart.types';
 import {
-  Action,
   ActionWithPayload,
   createAction,
   withMatcher,
 } from '../../utils/reducer/reducer.utils';
 import { CategoryItem } from '../categories/category.types';
 
-type SetCartStat = Action<CART_ACTIONS.SET_CART_STAT>;
+type SetCartStat = ActionWithPayload<CART_ACTIONS.SET_CART_STAT, boolean>;
+
+type SetCartItems = ActionWithPayload<CART_ACTIONS.SET_CART_ITEMS, CartItem[]>;
+
+export const setCartItems = withMatcher(
+  (cartItems: CartItem[]): SetCartItems =>
+    createAction(CART_ACTIONS.SET_CART_ITEMS, cartItems)
+);
 
 export const setCartStat = withMatcher(
   (bool: boolean): SetCartStat => createAction(CART_ACTIONS.SET_CART_STAT, bool)
@@ -27,11 +33,11 @@ export const addCartItem = (
           : cartItem
       )
     : [...cartItems, { ...productToAdd, quantity: 1 }];
-  return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
+  return setCartItems(newCartItems);
 };
 
 export const decrementSelectedItem = (cartItems: CartItem[], id: number) => {
-  let newCartItems: CartItem[] = [];
+  let newCartItems: CartItem[];
   cartItems.forEach((cartItem) => {
     if (cartItem.id === id)
       if (cartItem.quantity === 1)
@@ -45,10 +51,10 @@ export const decrementSelectedItem = (cartItems: CartItem[], id: number) => {
       }
     return newCartItems;
   });
-  return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
+  return setCartItems(newCartItems);
 };
 
 export const deleteSelectedItem = (cartItems: CartItem[], id: number) => {
   const newCartItems = cartItems.filter((cartItem) => cartItem.id !== id);
-  return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItems);
+  return setCartItems(newCartItems);
 };

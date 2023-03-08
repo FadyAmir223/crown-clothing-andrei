@@ -11,5 +11,5 @@ export type CartItem = CategoryItem & {
 
 export type CartState = {
   cartStat: boolean;
-  cartItems: [];
+  cartItems: CartItem[];
 };
