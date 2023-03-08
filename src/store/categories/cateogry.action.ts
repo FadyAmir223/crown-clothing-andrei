@@ -3,6 +3,7 @@ import {
   createAction,
   Action,
   ActionWithPayload,
+  withMatcher,
 } from '../../utils/reducer/reducer.utils';
 import { CATEGORY_ACTIONS, Category } from './category.types';
 
@@ -18,28 +19,27 @@ type FetchCategoriesFail = ActionWithPayload<
   Error
 >;
 
-export type CategoryActions =
-  | FetchCategoriesStart
-  | FetchCategorieSuccess
-  | FetchCategoriesFail;
+export const fetchCategoriesStart = withMatcher(
+  (): FetchCategoriesStart =>
+    createAction(CATEGORY_ACTIONS.FETCH_CATEGORY_START)
+);
 
-export const fetchCategoriesStart = (): FetchCategoriesStart =>
-  createAction(CATEGORY_ACTIONS.FETCH_CATEGORY_START);
+export const fetchCategorieSuccess = withMatcher(
+  (categories: Category[]): FetchCategorieSuccess =>
+    createAction(CATEGORY_ACTIONS.FETCH_CATEGORY_SUCCESS, categories)
+);
 
-export const fetchCategorieSuccess = (
-  categories: Category[]
-): FetchCategorieSuccess =>
-  createAction(CATEGORY_ACTIONS.FETCH_CATEGORY_SUCCESS, categories);
+export const fetchCategoriesFail = withMatcher(
+  (error: Error): FetchCategoriesFail =>
+    createAction(CATEGORY_ACTIONS.FETCH_CATEGORY_FAIL, error)
+);
 
-export const fetchCategoriesFail = (error: Error): FetchCategoriesFail =>
-  createAction(CATEGORY_ACTIONS.FETCH_CATEGORY_FAIL, error);
-
-export const fetchCategoriesAsync = () => async (dispatch) => {
+export const fetchCategoriesAsync = () => async (dispatch: Function) => {
   dispatch(fetchCategoriesStart());
   try {
     const categoriesArray = await getCategoriesAndDocuments();
     dispatch(fetchCategorieSuccess(categoriesArray));
-  } catch (error) {
+  } catch (error: any) {
     dispatch(fetchCategoriesFail(error));
   }
 };
