@@ -4,39 +4,35 @@ import {
   selectCartItems,
   selectTotalPrice,
 } from '../../store/cart/cart.selector';
-import './checkout.style.scss';
 import PaymentForm from '../../components/payment-form/payment-form.component';
+import {
+  CehckoutContainer,
+  CheckoutHeader,
+  HeaderBlock,
+  Total,
+} from './checkout.style';
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
-  // const [totalPrice, setTotalPrice] = useState(0);
-
   const totalPrice = useSelector(selectTotalPrice);
-  // useEffect(() => {
-  //   setTotalPrice(
-  //     cartItems.reduce((total, curr) => total + curr.quantity * curr.price, 0)
-  //   );
-  // }, [cartItems]);
 
   return (
-    <div className="checkout-container">
-      <div className="checkout-header">
+    <CehckoutContainer>
+      <CheckoutHeader>
         {['product', 'description', 'quantity', 'price', 'remove'].map(
           (header) => (
-            <div className="block-header" key={header}>
+            <HeaderBlock key={header}>
               <span>{header}</span>
-            </div>
+            </HeaderBlock>
           )
         )}
-      </div>
+      </CheckoutHeader>
       {cartItems.map((cartItem) => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
-      {cartItems.length !== 0 && (
-        <span className="total">TOTAL: ${totalPrice}</span>
-      )}
+      {cartItems.length !== 0 && <Total>TOTAL: ${totalPrice}</Total>}
       <PaymentForm />
-    </div>
+    </CehckoutContainer>
   );
 };
 

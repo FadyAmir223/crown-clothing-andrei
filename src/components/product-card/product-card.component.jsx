@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem } from '../../store/cart/cart.action';
 import { selectCartItems } from '../../store/cart/cart.selector';
-import Button from '../button/button.component';
+import { BUTTON_TYPES, getButton } from '../button/button.component';
 import {
   ProductCardContainer,
   Footer,
@@ -17,6 +17,8 @@ const ProductCard = ({ product }) => {
   const cartItems = useSelector(selectCartItems);
   const addCartItem_ = (item) => dispatch(addCartItem(cartItems, item));
 
+  const InvertedBtn = getButton(BUTTON_TYPES.inverted);
+
   return (
     <ProductCardContainer>
       <img src={imageUrl} alt={name} />
@@ -24,9 +26,9 @@ const ProductCard = ({ product }) => {
         <Name>{name}</Name>
         <Price>{price}</Price>
       </Footer>
-      <Button buttonType="inverted" onClick={() => addCartItem_(product)}>
+      <InvertedBtn onClick={() => addCartItem_(product)}>
         Add to card
-      </Button>
+      </InvertedBtn>
     </ProductCardContainer>
   );
 };

@@ -5,7 +5,15 @@ import {
   deleteSelectedItem,
 } from '../../store/cart/cart.action';
 import { selectCartItems } from '../../store/cart/cart.selector';
-import './checkout-item.style.scss';
+import {
+  BaseSpan,
+  CheckoutItemContainer,
+  ImageContainer,
+  Quantity,
+  RemoveButton,
+  Arrow,
+  Value,
+} from './checkout-item.style';
 
 const CheckoutItem = ({ cartItem }) => {
   const { id, name, imageUrl, price, quantity } = cartItem;
@@ -22,25 +30,21 @@ const CheckoutItem = ({ cartItem }) => {
     dispatch(deleteSelectedItem(cartItems, item));
 
   return (
-    <div className="checkout-item-container">
-      <div className="image-container">
+    <CheckoutItemContainer>
+      <ImageContainer>
         <img src={imageUrl} alt={name} />
-      </div>
-      <span className="name">{name}</span>
-      <span className="quantity">
-        <div className="arrow" onClick={() => decrementSelectedItem_(id)}>
-          &#10094;
-        </div>
-        <div className="value">{quantity}</div>
-        <div className="arrow" onClick={() => addCartItem_(cartItem)}>
-          &#10095;
-        </div>
-      </span>
-      <span className="price">{price}</span>
-      <div className="remove-button" onClick={() => deleteSelectedItem_(id)}>
+      </ImageContainer>
+      <BaseSpan>{name}</BaseSpan>
+      <Quantity>
+        <Arrow onClick={() => decrementSelectedItem_(id)}>&#10094;</Arrow>
+        <Value>{quantity}</Value>
+        <Arrow onClick={() => addCartItem_(cartItem)}>&#10095;</Arrow>
+      </Quantity>
+      <BaseSpan>{price}</BaseSpan>
+      <RemoveButton onClick={() => deleteSelectedItem_(id)}>
         &#10005;
-      </div>
-    </div>
+      </RemoveButton>
+    </CheckoutItemContainer>
   );
 };
 

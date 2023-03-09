@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTotalPrice } from '../../store/cart/cart.selector';
 import { selectCurrUser } from '../../store/user/user.selector';
-import Button from '../button/button.component';
+import { BUTTON_TYPES, getButton } from '../button/button.component';
 import {
   FormContainer,
   PaymentFormContainer,
@@ -17,6 +17,8 @@ const PaymentForm = () => {
   const currUser = useSelector(selectCurrUser);
   const totalPrice = useSelector(selectTotalPrice);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
+  const InvertedBtn = getButton(BUTTON_TYPES.inverted);
 
   const paymentHandler = async (e) => {
     e.preventDefault();
@@ -57,9 +59,7 @@ const PaymentForm = () => {
       <FormContainer onSubmit={paymentHandler}>
         <h2>Credit Card Payment</h2>
         <CardElement_ />
-        <Button buttonType="inverted" disabled={isProcessingPayment}>
-          Pay Now
-        </Button>
+        <InvertedBtn disabled={isProcessingPayment}>Pay Now</InvertedBtn>
       </FormContainer>
     </PaymentFormContainer>
   );

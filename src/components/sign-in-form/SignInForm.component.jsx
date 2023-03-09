@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPES, getButton } from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import {
   signInWithGooglePopup,
@@ -25,6 +25,8 @@ const SignInForm = () => {
     const { name, value } = event.target;
     setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
   };
+
+  const GoogleBtn = getButton(BUTTON_TYPES.google);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,7 +56,7 @@ const SignInForm = () => {
       <span>enter email and password - sign up</span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label='Email'
+          label="Email"
           inputOpt={{
             required: true,
             type: 'email',
@@ -66,7 +68,7 @@ const SignInForm = () => {
         />
 
         <FormInput
-          label='Password'
+          label="Password"
           inputOpt={{
             required: true,
             type: 'password',
@@ -77,14 +79,10 @@ const SignInForm = () => {
           }}
         />
         <ButtonsContainer>
-          <Button type='submit'>Sign In</Button>
-          <Button
-            buttonType='google'
-            type='button'
-            onClick={signInGoogleUserPopUp}
-          >
+          <Button type="submit">Sign In</Button>
+          <GoogleBtn type="button" onClick={signInGoogleUserPopUp}>
             Google Sign In
-          </Button>
+          </GoogleBtn>
         </ButtonsContainer>
       </form>
     </SignInContainer>
