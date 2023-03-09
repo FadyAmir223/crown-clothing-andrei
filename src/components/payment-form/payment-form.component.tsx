@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { useState } from 'react';
+import { StripeCardElement } from '@stripe/stripe-js';
+import { FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTotalPrice } from '../../store/cart/cart.selector';
 import { selectCurrUser } from '../../store/user/user.selector';
@@ -20,7 +21,7 @@ const PaymentForm = () => {
 
   const InvertedBtn = getButton(BUTTON_TYPES.inverted);
 
-  const paymentHandler = async (e) => {
+  const paymentHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(stripe && elements)) return;
 
@@ -38,11 +39,21 @@ const PaymentForm = () => {
       paymentIntent: { client_secret },
     } = response;
 
+    const isCardElement = (
+      card: StripeCardElement | null
+    ): card is StripeCardElement => card !== null;
+
+    let cardElement = elements.getElement(CardElement);
+    if (!isCardElement(cardElement)) return;
+
+    const username = currUser ? currUser.displayName : 'guest';
+    if (username === null) return;
+
     const paymentResult = await stripe.confirmCardPayment(client_secret, {
       payment_method: {
-        card: elements.getElement(CardElement),
+        card: cardElement,
         billing_details: {
-          name: currUser ? currUser.displayName : 'guest',
+          name: username,
         },
       },
     });

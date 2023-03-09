@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import Button, { BUTTON_TYPES, getButton } from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import {
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from '../../utils/firebase/firebase.utils';
 import { SignInContainer, ButtonsContainer } from './sign-in-form.style';
@@ -21,20 +20,17 @@ const SignInForm = () => {
     await signInWithGooglePopup();
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
   };
 
   const GoogleBtn = getButton(BUTTON_TYPES.google);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
+      await signInAuthUserWithEmailAndPassword(email, password);
       setUserData(defaultFormData);
     } catch (error) {
       switch (error.code) {
@@ -57,26 +53,22 @@ const SignInForm = () => {
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Email"
-          inputOpt={{
-            required: true,
-            type: 'email',
-            name: 'email',
-            id: 'email_',
-            onChange: handleChange,
-            value: email,
-          }}
+          required
+          type="email"
+          name="email"
+          id="email_"
+          onChange={handleChange}
+          value={email}
         />
 
         <FormInput
           label="Password"
-          inputOpt={{
-            required: true,
-            type: 'password',
-            name: 'password',
-            id: 'password_',
-            onChange: handleChange,
-            value: password,
-          }}
+          required
+          type="password"
+          name="password"
+          id="password_"
+          onChange={handleChange}
+          value={password}
         />
         <ButtonsContainer>
           <Button type="submit">Sign In</Button>
