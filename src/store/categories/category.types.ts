@@ -4,17 +4,17 @@ export enum CATEGORY_ACTIONS {
   FETCH_CATEGORY_FAIL = 'category/FETCH_CATEGORY_FAIL',
 }
 
-export type Category = {
-  readonly title: string;
-  readonly imageUrl: string;
-  readonly items: CategoryItem[];
-};
-
 export type CategoryItem = {
   id: number;
   imageUrl: string;
   name: string;
   price: number;
+};
+
+export type Category = {
+  readonly title: string;
+  readonly imageUrl: string;
+  readonly items: CategoryItem[];
 };
 
 export type CategoryMap = {

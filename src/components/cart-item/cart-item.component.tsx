@@ -1,6 +1,11 @@
+import { CartItem } from '../../store/cart/cart.types';
 import { CartItemContainer, ItemDetails, Name } from './cart-item.style';
 
-const CartItem = ({ cartItem }) => {
+type CartItemProps = {
+  cartItem: CartItem;
+};
+
+const CartItem = ({ cartItem }: CartItemProps) => {
   const { name, price, imageUrl, quantity } = cartItem;
 
   return (
@@ -8,7 +13,7 @@ const CartItem = ({ cartItem }) => {
       <img src={imageUrl} alt={name} />
       <ItemDetails>
         <Name>{name}</Name>
-        <span className='price'>
+        <span className="price">
           {quantity} x ${price}
         </span>
       </ItemDetails>

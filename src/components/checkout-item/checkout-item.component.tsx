@@ -5,6 +5,8 @@ import {
   deleteSelectedItem,
 } from '../../store/cart/cart.action';
 import { selectCartItems } from '../../store/cart/cart.selector';
+import { CartItem } from '../../store/cart/cart.types';
+import { CategoryItem } from '../../store/categories/category.types';
 import {
   BaseSpan,
   CheckoutItemContainer,
@@ -15,19 +17,24 @@ import {
   Value,
 } from './checkout-item.style';
 
-const CheckoutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+  cartItem: CartItem;
+};
+
+const CheckoutItem = ({ cartItem }: CheckoutItemProps) => {
   const { id, name, imageUrl, price, quantity } = cartItem;
 
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
 
-  const addCartItem_ = (item) => dispatch(addCartItem(cartItems, item));
+  const addCartItem_ = (item: CategoryItem) =>
+    dispatch(addCartItem(cartItems, item));
 
-  const decrementSelectedItem_ = (item) =>
-    dispatch(decrementSelectedItem(cartItems, item));
+  const decrementSelectedItem_ = (itemId: number) =>
+    dispatch(decrementSelectedItem(cartItems, itemId));
 
-  const deleteSelectedItem_ = (item) =>
-    dispatch(deleteSelectedItem(cartItems, item));
+  const deleteSelectedItem_ = (itemId: number) =>
+    dispatch(deleteSelectedItem(cartItems, itemId));
 
   return (
     <CheckoutItemContainer>

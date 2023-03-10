@@ -2,7 +2,13 @@ import CategoryItem from '../../components/category-item/category-item.component
 import { Outlet } from 'react-router-dom';
 import { CategoriesContainer } from './home.style';
 
-const categories = [
+export type CategoryData = {
+  id: number;
+  title: string;
+  imageUrl: string;
+};
+
+const categories: CategoryData[] = [
   {
     id: 1,
     title: 'hats',

@@ -1,3 +1,4 @@
+import { AnyAction, Dispatch } from 'redux';
 import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.utils';
 import {
   createAction,
@@ -34,7 +35,7 @@ export const fetchCategoriesFail = withMatcher(
     createAction(CATEGORY_ACTIONS.FETCH_CATEGORY_FAIL, error)
 );
 
-export const fetchCategoriesAsync = () => async (dispatch: Function) => {
+export const fetchCategoriesAsync = () => async (dispatch) => {
   dispatch(fetchCategoriesStart());
   try {
     const categoriesArray = await getCategoriesAndDocuments();
