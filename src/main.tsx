@@ -5,20 +5,19 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Elements } from '@stripe/react-stripe-js';
 
 import App from './App';
-import { Container } from './main.style.js';
 import { store, persistor } from './store/store';
 import { stripePromise } from './utils/stripe/stripe.utils';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <PersistGate persistor={persistor} loading={null}>
-      <Container>
+const root = document.getElementById('root');
+if (root !== null)
+  ReactDOM.createRoot(root).render(
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
         <BrowserRouter>
           <Elements stripe={stripePromise}>
             <App />
           </Elements>
         </BrowserRouter>
-      </Container>
-    </PersistGate>
-  </Provider>
-);
+      </PersistGate>
+    </Provider>
+  );
